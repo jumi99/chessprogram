@@ -13,7 +13,7 @@ interface CastlingFlags {
   blackQueen: boolean;
 }
 
-interface Move {
+export interface Move {
   source : Square;
   target : Square;
   capturedPiece : Piece;
@@ -575,9 +575,9 @@ export class ChessPosition {
             moves.forEach(newMove => {
               if (newMove.target.file == m.target.file && newMove.target.rank == m.target.rank) {
                 if (newMove.source.file !== m.source.file)
-                  ambiguousFile = newMove.source.file;
+                  ambiguousFile = m.source.file;
                 else
-                  ambiguousRank = newMove.source.rank;
+                  ambiguousRank = m.source.rank;
               }
             });
           }
@@ -615,7 +615,7 @@ export class ChessPosition {
            };
   }
 
-  doSANMove (move : string) {
+  sanToMove (move : string) : Move {
     var moves : Array<Move> = [];
     for (var i = 0; i < 8; i++) {
       for (var j = 0; j < 8; j++) {
@@ -626,13 +626,11 @@ export class ChessPosition {
     }
 
     for (var z = 0; z < moves.length; z++) {
-      if (move == this.moveToSAN(moves[z])) {
-        this.doMove(moves[z]);
-        return;
-      }
+      if (move == this.moveToSAN(moves[z]))
+        return moves[z];
     }
 
-    throw new Error("Invalid move");
+    throw new Error("Invalid move: " + move);
   }
 
   asciiBoard () : string {
