@@ -491,7 +491,7 @@ export class ChessPosition {
     if (m.source.file == 0 && m.source.rank == 7) this.castlingFlags.blackQueen = false;
     if (m.source.file == 7 && m.source.rank == 7) this.castlingFlags.blackQueen = false;
 
-    if (m.capturedPiece) this.halfMoveClock = 0; else this.halfMoveClock++;
+    if (m.capturedPiece || p.toUpperCase() == "P") this.halfMoveClock = 0; else this.halfMoveClock++;
     this.plyCount++;
     this.sideToMove = this.sideToMove == "W" ? "B" : "W";
   }
