@@ -44,8 +44,8 @@ function nextToken(state : ParseState) : ParseState {
     token = { type : "EOF" };
   } else {
     var data = "";
-    while (c !== "newline" && c !== "eof" && c !== " ") {
-      if (c !== "\n") data += c;
+    while (c !== "newline" && c !== "eof" && c !== " " && c !== "\n") {
+      data += c;
       nextChar();
     }
     unpush(c);
@@ -86,11 +86,14 @@ export function parseOnePgnGame(s : string) : Array<Game> {
         if (state.token.type == "Text") {
           if (!isResult(state.token.data)) {
             var sanMove = stripDot(state.token.data);
-            //try {
-              curGame.addMoveSAN(sanMove);
-            //} catch(e) {
-            //  console.log("Warning: ", e)
-            //}
+            if (sanMove !== "") //If the line ends in a move number without move
+            {
+              //try {
+                curGame.addMoveSAN(sanMove);
+              //} catch(e) {
+              //  console.log("Warning: ", e)
+              //}
+            }
           }
         }
         state = nextToken(state);
