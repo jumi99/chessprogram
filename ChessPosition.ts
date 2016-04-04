@@ -584,8 +584,8 @@ export class ChessPosition {
         }
     }
 
-    if (ambiguousFile) res += String.fromCharCode('a'.charCodeAt(0) + ambiguousFile);
-    if (ambiguousRank) res += String.fromCharCode('1'.charCodeAt(0) + ambiguousRank);
+    if (ambiguousFile != null) res += String.fromCharCode('a'.charCodeAt(0) + ambiguousFile);
+    if (ambiguousRank != null) res += String.fromCharCode('1'.charCodeAt(0) + ambiguousRank);
 
     if (m.capturedPiece) res += "x";
     res += String.fromCharCode('a'.charCodeAt(0) + m.target.file);
